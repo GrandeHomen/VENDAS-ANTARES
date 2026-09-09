@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas Antares</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            border: 1px solid #ff0000;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ff0000;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        .vendedor-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .vendedor-info input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: 1px solid #ff0000;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            outline: none;
+        }
+        .vendedor-info input::placeholder {
+            color: #888;
+        }
+        .armas-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .arma-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0d0d0d;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            transition: border 0.2s;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .arma-item:hover {
+            border-color: #ff0000;
+        }
+        .arma-info {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .arma-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: #222;
+            border-radius: 5px;
+            padding: 5px;
+            flex-shrink: 0;
+        }
+        .arma-info strong {
+            display: block;
+            font-size: 20px;
+            color: #ff0000;
+            margin-bottom: 5px;
+        }
+        .arma-info span {
+            font-size: 14px;
+            color: #ccc;
+        }
+        .arma-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .arma-actions input[type="number"] {
+            width: 70px;
+            padding: 8px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background-color: #111;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            -moz-appearance: textfield;
+        }
+        .arma-actions input[type="number"]::-webkit-outer-spin-button,
+        .arma-actions input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .arma-actions select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            background-color: #111;
+            color: #fff;
+            font-size: 14px;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s, transform 0.1s;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .feedback {
+            margin-top: 15px;
+            color: #00ff00;
+            font-weight: bold;
+            text-align: center;
+            min-height: 25px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔫 Vendas Antares</h1>
+
+        <div class="vendedor-info">
+            <input type="text" id="nomeVendedor" placeholder="Nome" maxlength="30">
+            <input type="text" id="idVendedor" placeholder="ID" maxlength="20">
+        </div>
+
+        <div class="armas-list" id="armasContainer">
+            <!-- As armas serão inseridas via JavaScript -->
+        </div>
+
+        <button onclick="gerarECopiar()">📋 Gerar Resumo e Copiar</button>
+
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        // ============================================================
+        // TABELA DE ARMAS - Vendas Antares
+        // ============================================================
+        const armas = [
+            { nome: "Glock", precoNormal: 380000, precoParceria: 280000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "Tec-9", precoNormal: 450000, precoParceria: 350000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "Five Seven", precoNormal: 450000, precoParceria: 350000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "MP5", precoNormal: 600000, precoParceria: 500000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "AK MK2", precoNormal: 750000, precoParceria: 650000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "MTAR", precoNormal: 780000, precoParceria: 720000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "Carabina MK2", precoNormal: 980000, precoParceria: 900000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" },
+            { nome: "G-36", precoNormal: 1100000, precoParceria: 1000000, imagem: "https://via.placeholder.com/50x50.png?text=IMG" }
+        ];
+
+        // Função para formatar preço no padrão brasileiro (ex: R$ 380.000)
+        function formatarPreco(valor) {
+            return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        // Renderizar a lista de armas
+        function renderizarArmas() {
+            const container = document.getElementById('armasContainer');
+            container.innerHTML = '';
+            armas.forEach((arma, index) => {
+                const div = document.createElement('div');
+                div.className = 'arma-item';
+                div.innerHTML = `
+                    <div class="arma-info">
+                        <img src="${arma.imagem}" alt="${arma.nome}" 
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/50x50.png?text=IMG';">
+                        <div>
+                            <strong>${arma.nome}</strong>
+                            <span>Normal: ${formatarPreco(arma.precoNormal)} | Parceria: ${formatarPreco(arma.precoParceria)}</span>
+                        </div>
+                    </div>
+                    <div class="arma-actions">
+                        <input type="number" id="qtd_${index}" min="0" value="0" placeholder="Qtd">
+                        <select id="tipo_${index}">
+                            <option value="normal">Normal</option>
+                            <option value="parceria">Parceria</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Função principal: gera o resumo e copia
+        function gerarECopiar() {
+            const nome = document.getElementById('nomeVendedor').value.trim();
+            const id = document.getElementById('idVendedor').value.trim();
+
+            if (!nome) {
+                alert('Por favor, preencha seu nome.');
+                return;
+            }
+            if (!id) {
+                alert('Por favor, preencha seu ID.');
+                return;
+            }
+
+            let itens = [];
+            let totalGeral = 0;
+
+            armas.forEach((arma, index) => {
+                const qtd = parseInt(document.getElementById(`qtd_${index}`).value) || 0;
+                if (qtd > 0) {
+                    const tipo = document.getElementById(`tipo_${index}`).value;
+                    const preco = tipo === 'normal' ? arma.precoNormal : arma.precoParceria;
+                    const subtotal = preco * qtd;
+                    itens.push({
+                        nome: arma.nome,
+                        quantidade: qtd,
+                        tipo: tipo,
+                        subtotal: subtotal
+                    });
+                    totalGeral += subtotal;
+                }
+            });
+
+            if (itens.length === 0) {
+                alert('Nenhum item selecionado. Ajuste as quantidades.');
+                return;
+            }
+
+            const valorFac = totalGeral * 0.7;
+            const valorVendedor = totalGeral * 0.3;
+
+            let texto = `=== VENDA ===\n`;
+            texto += `Vendedor: ${nome} (ID: ${id})\n`;
+            texto += `--------------------------------\n`;
+            itens.forEach(item => {
+                texto += `${item.nome} x${item.quantidade} (${item.tipo}) = ${formatarPreco(item.subtotal)}\n`;
+            });
+            texto += `--------------------------------\n`;
+            texto += `Total: ${formatarPreco(totalGeral)}\n`;
+            texto += `Divisão 70/30:\n`;
+            texto += `  Facção (70%): ${formatarPreco(valorFac)}\n`;
+            texto += `  Vendedor (30%): ${formatarPreco(valorVendedor)}\n`;
+
+            navigator.clipboard.writeText(texto)
+                .then(() => {
+                    document.getElementById('feedback').textContent = '✅ Resumo copiado! Cole no Discord.';
+                    setTimeout(() => {
+                        document.getElementById('feedback').textContent = '';
+                    }, 3000);
+                })
+                .catch(err => {
+                    alert('Erro ao copiar: ' + err);
+                });
+        }
+
+        // Inicializar
+        renderizarArmas();
+    </script>
+</body>
+  </html>
