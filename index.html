@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas Antares</title>
+    <style>
+        :root {
+            --vermelho: #e60000;
+            --vermelho-escuro: #990000;
+            --preto: #0a0a0a;
+            --cinza-escuro: #1a1a1a;
+            --cinza-medio: #2a2a2a;
+            --cinza-claro: #cccccc;
+            --branco: #ffffff;
+            --verde: #00e676;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--preto);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(230,0,0,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(230,0,0,0.03) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255,0,0,0.01) 0px, rgba(255,0,0,0.01) 2px, transparent 2px, transparent 10px);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: linear-gradient(145deg, #151515, #0d0d0d);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(230,0,0,0.2), 0 0 30px rgba(230,0,0,0.3);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(230,0,0,0.05), transparent, rgba(230,0,0,0.05), transparent);
+            animation: girar 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes girar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .conteudo {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--vermelho);
+            text-shadow: 0 0 20px rgba(230,0,0,0.8), 0 0 40px rgba(230,0,0,0.4);
+            display: inline-block;
+            border-bottom: 3px solid var(--vermelho);
+            padding-bottom: 10px;
+        }
+
+        .logo span {
+            color: var(--branco);
+            text-shadow: none;
+        }
+
+        .vendedor-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .campo {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            border: 2px solid var(--cinza-medio);
+            border-radius: 10px;
+            background-color: #111;
+            color: var(--branco);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .campo input:focus {
+            border-color: var(--vermelho);
+            box-shadow: 0 0 15px rgba(230,0,0,0.3);
+            outline: none;
+        }
+
+        .campo .icone {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .campo input::placeholder {
+            color: #888;
+        }
+
+        .grid-armas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card-arma {
+            background: #111;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--cinza-medio);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-arma:hover {
+            border-color: var(--vermelho);
+            background: #181818;
+            box-shadow: 0 6px 18px rgba(230,0,0,0.2);
+            transform: translateY(-3px);
+        }
+
+        .arma-topo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .arma-icone {
+            width: 55px;
+            height: 55px;
+            background: #222;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            flex-shrink: 0;
+        }
+
+        .arma-icone img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .arma-nome {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--branco);
+            letter-spacing: 0.5px;
+        }
+
+        .arma-precos {
+            font-size: 13px;
+            color: var(--cinza-claro);
+            line-height: 1.5;
+        }
+
+        .arma-precos .preco-normal {
+            color: #ff6666;
+        }
+
+        .arma-precos .preco-parceria {
+            color: #66ccff;
+        }
+
+        .arma-controles {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controle-qtd {
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .controle-qtd input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--cinza-medio);
+            border-radius: 6px;
+            background: #0a0a0a;
+            color: var(--branco);
+            text-align: center;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .controle-qtd input:focus {
+            border-color: var(--vermelho);
+            outline: none;
+        }
+
+        .controle-tipo select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--cinza-medio);
+            background: #0a0a0a;
+            color: var(--branco);
+            font-size: 14px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .controle-tipo select:focus {
+            border-color: var(--vermelho);
+            outline: none;
+        }
+
+        .botao-copiar {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #cc0000, #660000);
+            border: none;
+            border-radius: 12px;
+            color: var(--branco);
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(230,0,0,0.4);
+        }
+
+        .botao-copiar:hover {
+            background: linear-gradient(135deg, #ff1a1a, #990000);
+            box-shadow: 0 10px 30px rgba(230,0,0,0.6);
+            transform: translateY(-2px);
+        }
+
+        .botao-copiar:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 12px rgba(230,0,0,0.3);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 25px;
+            font-size: 16px;
+            color: var(--verde);
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 700px) {
+            .grid-armas {
+                grid-template-columns: 1fr;
+            }
+            .logo {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="conteudo">
+            <div class="cabecalho">
+                <div class="logo">⚡ VENDAS <span>ANTARES</span></div>
+            </div>
+
+            <div class="vendedor-info">
+                <div class="campo">
+                    <span class="icone">👤</span>
+                    <input type="text" id="nomeVendedor" placeholder="Nome do vendedor" maxlength="30">
+                </div>
+                <div class="campo">
+                    <span class="icone">🆔</span>
+                    <input type="text" id="idVendedor" placeholder="ID" maxlength="20">
+                </div>
+            </div>
+
+            <div class="grid-armas" id="armasContainer">
+                <!-- As armas serão inseridas via JavaScript -->
+            </div>
+
+            <button class="botao-copiar" onclick="gerarECopiar()">📋 Copiar Resumo da Venda</button>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // TABELA DE ARMAS - Vendas Antares
+        // ============================================================
+        const armas = [
+            { 
+                nome: "Glock", 
+                precoNormal: 380000, 
+                precoParceria: 280000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533933809775/glock18-7e6eff10.webp?ex=6aa2f101&is=6aa19f81&hm=9f0942f63a29459db0c5d197f14ba21265255dee05be3e6e8ea343308debc562&" 
+            },
+            { 
+                nome: "Tec-9", 
+                precoNormal: 450000, 
+                precoParceria: 350000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534386798762/tec-9-059acaeb.webp?ex=6aa2f101&is=6aa19f81&hm=2329576c6a226e3a6c166399973bb205e58ba84cb5e043a887a541939a984daa&" 
+            },
+            { 
+                nome: "Five Seven", 
+                precoNormal: 450000, 
+                precoParceria: 350000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547305013360074803/fn-five-seven-330c92dd.webp?ex=6aa2ef96&is=6aa19e16&hm=faee51c8998e8aeaecea626665d27e2bb0e80afe384dd419d5bf7d6c3fb94056&" 
+            },
+            { 
+                nome: "MP5", 
+                precoNormal: 600000, 
+                precoParceria: 500000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534722216087/hk-mp5-cca12975.webp?ex=6aa2f101&is=6aa19f81&hm=5afdc9d184b79f593fec0640adf124683d371b86efcde45b866268a9a663a772&" 
+            },
+            { 
+                nome: "AK MK2", 
+                precoNormal: 750000, 
+                precoParceria: 650000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306535091445841/ak47-18d0f9a0.webp?ex=6aa2f101&is=6aa19f81&hm=8136e368f236ceb67748d75852a0f511863d552aea4ba441e9e6ef4061e65c43&" 
+            },
+            { 
+                nome: "MTAR", 
+                precoNormal: 780000, 
+                precoParceria: 720000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306532339978281/mk18-assault-rifle-85686ef0.webp?ex=6aa2f100&is=6aa19f80&hm=9cf3d65bcf956ecf4056b0cac5ef19013a8935e8c48bf4358832b883c84d617b&" 
+            },
+            { 
+                nome: "Carabina MK2", 
+                precoNormal: 980000, 
+                precoParceria: 900000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533170184314/gta5-carbine-rifle-mk2-02495b91.webp?ex=6aa2f101&is=6aa19f81&hm=306a0ed4e4e9293569fc4cdbed7ca2e29160997ef3cdb19d57bd6132ef686fe1&" 
+            },
+            { 
+                nome: "G-36", 
+                precoNormal: 1100000, 
+                precoParceria: 1000000, 
+                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533564579840/g36c-ar-939a1241.webp?ex=6aa2f101&is=6aa19f81&hm=746089e8754c9943a136b6aa327aef680329fac9bc05fbac99bf4e27cab294aa&" 
+            }
+        ];
+
+        function formatarPreco(valor) {
+            return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function renderizarArmas() {
+            const container = document.getElementById('armasContainer');
+            container.innerHTML = '';
+            armas.forEach((arma, index) => {
+                const div = document.createElement('div');
+                div.className = 'card-arma';
+                div.innerHTML = `
+                    <div class="arma-topo">
+                        <div class="arma-icone">
+                            <img src="${arma.imagem}" alt="${arma.nome}" />
+                        </div>
+                        <div>
+                            <div class="arma-nome">${arma.nome}</div>
+                            <div class="arma-precos">
+                                <span class="preco-normal">Normal: ${formatarPreco(arma.precoNormal)}</span><br>
+                                <span class="preco-parceria">Parceria: ${formatarPreco(arma.precoParceria)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arma-controles">
+                        <div class="controle-qtd">
+                            <input type="number" id="qtd_${index}" min="0" value="0" placeholder="Qtd">
+                        </div>
+                        <div class="controle-tipo">
+                            <select id="tipo_${index}">
+                                <option value="normal">Normal</option>
+                                <option value="parceria">Parceria</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function gerarECopiar() {
+            const nome = document.getElementById('nomeVendedor').value.trim();
+            const id = document.getElementById('idVendedor').value.trim();
+
+            if (!nome) {
+                alert('Por favor, preencha seu nome.');
+                return;
+            }
+            if (!id) {
+                alert('Por favor, preencha seu ID.');
+                return;
+            }
+
+            let itens = [];
+            let totalGeral = 0;
+
+            armas.forEach((arma, index) => {
+                const qtd = parseInt(document.getElementById(`qtd_${index}`).value) || 0;
+                if (qtd > 0) {
+                    const tipo = document.getElementById(`tipo_${index}`).value;
+                    const preco = tipo === 'normal' ? arma.precoNormal : arma.precoParceria;
+                    const subtotal = preco * qtd;
+                    itens.push({
+                        nome: arma.nome,
+                        quantidade: qtd,
+                        tipo: tipo,
+                        subtotal: subtotal
+                    });
+                    totalGeral += subtotal;
+                }
+            });
+
+            if (itens.length === 0) {
+                alert('Nenhum item selecionado. Ajuste as quantidades.');
+                return;
+            }
+
+            const valorFac = totalGeral * 0.7;
+            const valorVendedor = totalGeral * 0.3;
+
+            let texto = `📦 **VENDA REALIZADA** 📦\n`;
+            texto += `👤 Vendedor: ${nome} | 🆔 ID: ${id}\n`;
+            texto += `══════════════════════════\n`;
+            itens.forEach(item => {
+                texto += `🔫 ${item.nome} x${item.quantidade} (${item.tipo}) = 💰 ${formatarPreco(item.subtotal)}\n`;
+            });
+            texto += `══════════════════════════\n`;
+            texto += `💵 **Total: ${formatarPreco(totalGeral)}**\n`;
+            texto += `📊 Divisão 70/30:\n`;
+            texto += `🏛️ Facção (70%): ${formatarPreco(valorFac)}\n`;
+            texto += `👤 Vendedor (30%): ${formatarPreco(valorVendedor)}\n`;
+            texto += `✅ Venda finalizada!`;
+
+            navigator.clipboard.writeText(texto)
+                .then(() => {
+                    document.getElementById('feedback').textContent = '✅ Resumo copiado! Cole no Discord.';
+                    setTimeout(() => {
+                        document.getElementById('feedback').textContent = '';
+                    }, 3000);
+                })
+                .catch(err => {
+                    alert('Erro ao copiar: ' + err);
+                });
+        }
+
+        renderizarArmas();
+    </script>
+</body>
+</html>
