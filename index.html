@@ -3,46 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendas Antares</title>
+    <meta name="description" content="Painel de vendas Vendas Antares">
+    <title>Vendas Antares | Painel de Vendas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --vermelho: #e60000;
-            --vermelho-escuro: #990000;
+            --vermelho: #d90429;
+            --vermelho-hover: #ef233c;
+            --vermelho-escuro: #8b0000;
             --preto: #0a0a0a;
+            --preto-suave: #0d0d0d;
             --cinza-escuro: #1a1a1a;
             --cinza-medio: #2a2a2a;
-            --cinza-claro: #cccccc;
+            --cinza-borda: #333;
+            --cinza-claro: #b0b0b0;
             --branco: #ffffff;
+            --dourado: #ffb703;
+            --ciano: #00d4ff;
             --verde: #00e676;
+            --sombra: 0 20px 40px rgba(0,0,0,0.8);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         body {
             background-color: var(--preto);
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(230,0,0,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 85% 80%, rgba(230,0,0,0.03) 0%, transparent 50%),
-                repeating-linear-gradient(45deg, rgba(255,0,0,0.01) 0px, rgba(255,0,0,0.01) 2px, transparent 2px, transparent 10px);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(217,4,41,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(217,4,41,0.05) 0%, transparent 50%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            color: var(--branco);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
-            background: linear-gradient(145deg, #151515, #0d0d0d);
+            max-width: 1100px;
+            background: linear-gradient(145deg, #141414, #0d0d0d);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(230,0,0,0.2), 0 0 30px rgba(230,0,0,0.3);
-            padding: 30px;
+            box-shadow: var(--sombra), 0 0 0 1px rgba(217,4,41,0.2), 0 0 40px rgba(217,4,41,0.15);
+            padding: 35px;
             position: relative;
             overflow: hidden;
         }
@@ -54,36 +70,37 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(230,0,0,0.05), transparent, rgba(230,0,0,0.05), transparent);
-            animation: girar 15s linear infinite;
+            background: conic-gradient(from 0deg, transparent, rgba(217,4,41,0.04), transparent, rgba(217,4,41,0.04), transparent);
+            animation: girar 20s linear infinite;
             pointer-events: none;
         }
 
         @keyframes girar {
-            0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .conteudo {
+        .container > * {
             position: relative;
             z-index: 1;
         }
 
+        /* ====== CABEÇALHO ====== */
         .cabecalho {
             text-align: center;
             margin-bottom: 30px;
         }
 
         .logo {
-            font-size: 3rem;
-            font-weight: 900;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             color: var(--vermelho);
-            text-shadow: 0 0 20px rgba(230,0,0,0.8), 0 0 40px rgba(230,0,0,0.4);
+            text-shadow: 0 0 20px rgba(217,4,41,0.8), 0 0 40px rgba(217,4,41,0.4);
             display: inline-block;
+            padding-bottom: 8px;
             border-bottom: 3px solid var(--vermelho);
-            padding-bottom: 10px;
         }
 
         .logo span {
@@ -91,10 +108,20 @@
             text-shadow: none;
         }
 
+        .subtitulo {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--cinza-claro);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* ====== CAMPOS ====== */
         .vendedor-info {
             display: flex;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
@@ -112,120 +139,193 @@
             background-color: #111;
             color: var(--branco);
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         .campo input:focus {
             border-color: var(--vermelho);
-            box-shadow: 0 0 15px rgba(230,0,0,0.3);
+            box-shadow: 0 0 15px rgba(217,4,41,0.3);
             outline: none;
+            background-color: #151515;
         }
+
+        .campo input::placeholder { color: #666; }
 
         .campo .icone {
             position: absolute;
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            color: var(--cinza-claro);
+            pointer-events: none;
+            transition: color 0.25s ease;
+        }
+
+        .campo:focus-within .icone { color: var(--vermelho); }
+
+        /* ====== BUSCA ====== */
+        .busca-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .busca-container input {
+            width: 100%;
+            padding: 12px 18px 12px 45px;
+            border: 1px solid var(--cinza-medio);
+            border-radius: 10px;
+            background-color: #0f0f0f;
+            color: var(--branco);
+            font-size: 15px;
+            transition: all 0.25s ease;
+        }
+
+        .busca-container input:focus {
+            border-color: var(--vermelho);
+            box-shadow: 0 0 12px rgba(217,4,41,0.25);
+            outline: none;
+        }
+
+        .busca-container input::placeholder { color: #666; }
+
+        .busca-container .icone-busca {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--cinza-claro);
             pointer-events: none;
         }
 
-        .campo input::placeholder {
-            color: #888;
-        }
+        .busca-container:focus-within .icone-busca { color: var(--vermelho); }
 
+        /* ====== GRID ====== */
         .grid-armas {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .card-arma {
             background: #111;
             border-radius: 12px;
-            padding: 15px;
-            border: 1px solid var(--cinza-medio);
-            transition: all 0.3s ease;
+            padding: 16px;
+            border: 1px solid var(--cinza-borda);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
+            animation: cardIn 0.4s ease backwards;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card-arma:hover {
             border-color: var(--vermelho);
-            background: #181818;
-            box-shadow: 0 6px 18px rgba(230,0,0,0.2);
+            background: #171717;
+            box-shadow: 0 8px 24px rgba(217,4,41,0.2);
             transform: translateY(-3px);
         }
 
         .arma-topo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .arma-icone {
-            width: 55px;
-            height: 55px;
-            background: #222;
+            width: 60px;
+            height: 60px;
+            background: #1c1c1c;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 8px;
             flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arma-icone.carregando::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .arma-icone img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
+        .arma-icone img.carregada { opacity: 1; }
+
         .arma-nome {
-            font-size: 18px;
-            font-weight: bold;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
             color: var(--branco);
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .arma-precos {
             font-size: 13px;
             color: var(--cinza-claro);
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-top: 2px;
         }
 
-        .arma-precos .preco-normal {
-            color: #ff6666;
-        }
+        .arma-precos .preco-normal { color: var(--dourado); font-weight: 600; }
+        .arma-precos .preco-parceria { color: var(--ciano); font-weight: 600; }
 
-        .arma-precos .preco-parceria {
-            color: #66ccff;
-        }
-
+        /* ====== CONTROLES ====== */
         .arma-controles {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .controle-qtd {
-            flex: 1;
-            min-width: 70px;
+            flex: 0 0 70px;
         }
 
         .controle-qtd input {
             width: 100%;
-            padding: 8px;
+            padding: 9px;
             border: 1px solid var(--cinza-medio);
-            border-radius: 6px;
+            border-radius: 8px;
             background: #0a0a0a;
             color: var(--branco);
             text-align: center;
             font-size: 14px;
-            transition: border 0.3s;
+            font-weight: 600;
+            transition: border 0.25s ease;
+            -moz-appearance: textfield;
+        }
+
+        .controle-qtd input::-webkit-outer-spin-button,
+        .controle-qtd input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         .controle-qtd input:focus {
@@ -233,15 +333,20 @@
             outline: none;
         }
 
+        .controle-tipo {
+            flex: 1;
+        }
+
         .controle-tipo select {
-            padding: 8px 12px;
-            border-radius: 6px;
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 8px;
             border: 1px solid var(--cinza-medio);
             background: #0a0a0a;
             color: var(--branco);
             font-size: 14px;
             cursor: pointer;
-            transition: border 0.3s;
+            transition: border 0.25s ease;
         }
 
         .controle-tipo select:focus {
@@ -249,158 +354,507 @@
             outline: none;
         }
 
-        .botao-copiar {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #cc0000, #660000);
-            border: none;
-            border-radius: 12px;
+        .btn-add {
+            padding: 9px 14px;
+            background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
             color: var(--branco);
-            font-size: 20px;
-            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 6px 20px rgba(230,0,0,0.4);
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
         }
 
-        .botao-copiar:hover {
-            background: linear-gradient(135deg, #ff1a1a, #990000);
-            box-shadow: 0 10px 30px rgba(230,0,0,0.6);
-            transform: translateY(-2px);
+        .btn-add:hover {
+            background: linear-gradient(135deg, var(--vermelho-hover), var(--vermelho));
+            box-shadow: 0 4px 12px rgba(217,4,41,0.5);
+            transform: translateY(-1px);
         }
 
-        .botao-copiar:active {
-            transform: translateY(1px);
-            box-shadow: 0 4px 12px rgba(230,0,0,0.3);
+        .btn-add:active {
+            transform: translateY(0);
         }
 
-        .feedback {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-            min-height: 25px;
+        .btn-add svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ====== CARRINHO ====== */
+        .carrinho {
+            background: #0f0f0f;
+            border: 1px solid var(--cinza-borda);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+            animation: cardIn 0.35s ease;
+        }
+
+        .carrinho.ativo { display: block; }
+
+        .carrinho-titulo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--vermelho);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .carrinho-titulo .contador {
+            background: var(--vermelho);
+            color: var(--branco);
+            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .carrinho-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .carrinho-lista::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .carrinho-lista::-webkit-scrollbar-track {
+            background: #111;
+            border-radius: 3px;
+        }
+
+        .carrinho-lista::-webkit-scrollbar-thumb {
+            background: var(--vermelho-escuro);
+            border-radius: 3px;
+        }
+
+        .item-carrinho {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #141414;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #222;
+            transition: border 0.2s ease;
+            animation: itemIn 0.3s ease;
+        }
+
+        @keyframes itemIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .item-carrinho:hover {
+            border-color: var(--cinza-borda);
+        }
+
+        .item-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .item-nome {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
             font-size: 16px;
-            color: var(--verde);
+            color: var(--branco);
+            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
+        .item-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .item-badge.normal {
+            background: rgba(255, 183, 3, 0.15);
+            color: var(--dourado);
+            border: 1px solid rgba(255, 183, 3, 0.3);
+        }
+
+        .item-badge.parceria {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--ciano);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .item-qtd {
+            font-size: 14px;
+            color: var(--cinza-claro);
+            font-weight: 600;
+        }
+
+        .item-subtotal {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--dourado);
+            margin-left: auto;
+        }
+
+        .btn-remover {
+            background: transparent;
+            border: 1px solid #442;
+            color: #ff6666;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-remover:hover {
+            background: rgba(217,4,41,0.15);
+            border-color: var(--vermelho);
+            color: var(--vermelho-hover);
+            transform: scale(1.05);
+        }
+
+        .btn-remover svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ====== RESUMO ====== */
+        .resumo {
+            background: #0f0f0f;
+            border: 1px solid var(--cinza-borda);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .resumo.ativo {
+            display: grid;
+            animation: cardIn 0.3s ease;
+        }
+
+        .resumo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .resumo-item .rotulo {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--cinza-claro);
+            font-weight: 500;
+        }
+
+        .resumo-item .valor {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--branco);
+        }
+
+        .resumo-item .valor.total { color: var(--dourado); }
+        .resumo-item .valor.faccao { color: var(--vermelho); }
+        .resumo-item .valor.vendedor { color: var(--verde); }
+
+        /* ====== BOTÕES ====== */
+        .acoes {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .botao-primario,
+        .botao-secundario {
+            flex: 1;
+            min-width: 160px;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .botao-primario svg,
+        .botao-secundario svg { width: 20px; height: 20px; }
+
+        .botao-primario {
+            background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
+            color: var(--branco);
+            box-shadow: 0 6px 20px rgba(217,4,41,0.4);
+        }
+
+        .botao-primario:hover {
+            background: linear-gradient(135deg, var(--vermelho-hover), var(--vermelho));
+            box-shadow: 0 10px 30px rgba(217,4,41,0.6);
+            transform: translateY(-2px);
+        }
+
+        .botao-primario:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 12px rgba(217,4,41,0.3);
+        }
+
+        .botao-secundario {
+            background: transparent;
+            color: var(--cinza-claro);
+            border: 2px solid var(--cinza-medio);
+        }
+
+        .botao-secundario:hover {
+            color: var(--branco);
+            border-color: var(--vermelho);
+            background: rgba(217,4,41,0.08);
+        }
+
+        /* ====== TOAST ====== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translate(-50%, 150%);
+            background: #1a1a1a;
+            color: var(--branco);
+            padding: 14px 28px;
+            border-radius: 10px;
+            border-left: 4px solid var(--verde);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            font-weight: 500;
+            font-size: 15px;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 9999;
+            pointer-events: none;
+            max-width: 90vw;
+        }
+
+        .toast.mostrar { transform: translate(-50%, 0); }
+        .toast.erro { border-left-color: var(--vermelho); }
+        .toast.aviso { border-left-color: var(--dourado); }
+
+        .sem-resultados {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--cinza-claro);
+            font-size: 15px;
+        }
+
+        /* ====== RESPONSIVO ====== */
         @media (max-width: 700px) {
-            .grid-armas {
-                grid-template-columns: 1fr;
-            }
-            .logo {
-                font-size: 2.2rem;
-            }
-            .container {
-                padding: 20px;
-            }
+            .container { padding: 22px; border-radius: 16px; }
+            .logo { font-size: 2rem; letter-spacing: 4px; }
+            .grid-armas { grid-template-columns: 1fr; }
+            .botao-primario, .botao-secundario { font-size: 15px; padding: 14px 18px; }
+            .resumo { grid-template-columns: 1fr 1fr; }
+            .item-info { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .item-subtotal { margin-left: 0; width: 100%; text-align: right; }
+        }
+
+        @media (max-width: 400px) {
+            .resumo { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="conteudo">
-            <div class="cabecalho">
-                <div class="logo">⚡ VENDAS <span>ANTARES</span></div>
+        <header class="cabecalho">
+            <h1 class="logo">VENDAS <span>ANTARES</span></h1>
+            <p class="subtitulo">Painel de Vendas</p>
+        </header>
+
+        <section class="vendedor-info">
+            <div class="campo">
+                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <input type="text" id="nomeVendedor" placeholder="Nome do vendedor" maxlength="30" autocomplete="off">
             </div>
-
-            <div class="vendedor-info">
-                <div class="campo">
-                    <span class="icone">👤</span>
-                    <input type="text" id="nomeVendedor" placeholder="Nome do vendedor" maxlength="30">
-                </div>
-                <div class="campo">
-                    <span class="icone">🆔</span>
-                    <input type="text" id="idVendedor" placeholder="ID" maxlength="20">
-                </div>
+            <div class="campo">
+                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                    <circle cx="7" cy="7" r="1"/>
+                </svg>
+                <input type="text" id="idVendedor" placeholder="ID" maxlength="20" autocomplete="off">
             </div>
+        </section>
 
-            <div class="grid-armas" id="armasContainer">
-                <!-- As armas serão inseridas via JavaScript -->
+        <section class="busca-container">
+            <svg class="icone-busca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" id="busca" placeholder="Buscar arma..." autocomplete="off">
+        </section>
+
+        <section class="grid-armas" id="armasContainer" aria-live="polite"></section>
+
+        <!-- CARRINHO -->
+        <section class="carrinho" id="carrinho" aria-live="polite">
+            <div class="carrinho-titulo">
+                🛒 Itens Adicionados
+                <span class="contador" id="contadorCarrinho">0</span>
             </div>
+            <div class="carrinho-lista" id="carrinhoLista"></div>
+        </section>
 
-            <button class="botao-copiar" onclick="gerarECopiar()">📋 Copiar Resumo da Venda</button>
+        <!-- RESUMO -->
+        <section class="resumo" id="resumo" aria-live="polite"></section>
 
-            <div class="feedback" id="feedback"></div>
+        <div class="acoes">
+            <button class="botao-secundario" onclick="limparTudo()" title="Limpar tudo (Esc)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                Limpar
+            </button>
+            <button class="botao-primario" onclick="gerarECopiar()" title="Copiar resumo (Ctrl+Enter)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copiar Resumo
+            </button>
         </div>
     </div>
 
+    <div id="toast" class="toast" role="status"></div>
+
     <script>
-        // ============================================================
-        // TABELA DE ARMAS - Vendas Antares
-        // ============================================================
+        /* ============================================================
+           VENDAS ANTARES - PAINEL DE VENDAS
+           ============================================================ */
+
+        /* ====== TABELA DE ARMAS ====== */
         const armas = [
-            { 
-                nome: "Glock", 
-                precoNormal: 380000, 
-                precoParceria: 280000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533933809775/glock18-7e6eff10.webp?ex=6aa2f101&is=6aa19f81&hm=9f0942f63a29459db0c5d197f14ba21265255dee05be3e6e8ea343308debc562&" 
-            },
-            { 
-                nome: "Tec-9", 
-                precoNormal: 450000, 
-                precoParceria: 350000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534386798762/tec-9-059acaeb.webp?ex=6aa2f101&is=6aa19f81&hm=2329576c6a226e3a6c166399973bb205e58ba84cb5e043a887a541939a984daa&" 
-            },
-            { 
-                nome: "Five Seven", 
-                precoNormal: 450000, 
-                precoParceria: 350000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547305013360074803/fn-five-seven-330c92dd.webp?ex=6aa2ef96&is=6aa19e16&hm=faee51c8998e8aeaecea626665d27e2bb0e80afe384dd419d5bf7d6c3fb94056&" 
-            },
-            { 
-                nome: "MP5", 
-                precoNormal: 600000, 
-                precoParceria: 500000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534722216087/hk-mp5-cca12975.webp?ex=6aa2f101&is=6aa19f81&hm=5afdc9d184b79f593fec0640adf124683d371b86efcde45b866268a9a663a772&" 
-            },
-            { 
-                nome: "AK MK2", 
-                precoNormal: 750000, 
-                precoParceria: 650000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306535091445841/ak47-18d0f9a0.webp?ex=6aa2f101&is=6aa19f81&hm=8136e368f236ceb67748d75852a0f511863d552aea4ba441e9e6ef4061e65c43&" 
-            },
-            { 
-                nome: "MTAR", 
-                precoNormal: 780000, 
-                precoParceria: 720000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306532339978281/mk18-assault-rifle-85686ef0.webp?ex=6aa2f100&is=6aa19f80&hm=9cf3d65bcf956ecf4056b0cac5ef19013a8935e8c48bf4358832b883c84d617b&" 
-            },
-            { 
-                nome: "Carabina MK2", 
-                precoNormal: 980000, 
-                precoParceria: 900000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533170184314/gta5-carbine-rifle-mk2-02495b91.webp?ex=6aa2f101&is=6aa19f81&hm=306a0ed4e4e9293569fc4cdbed7ca2e29160997ef3cdb19d57bd6132ef686fe1&" 
-            },
-            { 
-                nome: "G-36", 
-                precoNormal: 1100000, 
-                precoParceria: 1000000, 
-                imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533564579840/g36c-ar-939a1241.webp?ex=6aa2f101&is=6aa19f81&hm=746089e8754c9943a136b6aa327aef680329fac9bc05fbac99bf4e27cab294aa&" 
-            }
+            { nome: "Glock",        precoNormal: 380000,  precoParceria: 280000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533933809775/glock18-7e6eff10.webp?ex=6aa2f101&is=6aa19f81&hm=9f0942f63a29459db0c5d197f14ba21265255dee05be3e6e8ea343308debc562&" },
+            { nome: "Tec-9",        precoNormal: 450000,  precoParceria: 350000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534386798762/tec-9-059acaeb.webp?ex=6aa2f101&is=6aa19f81&hm=2329576c6a226e3a6c166399973bb205e58ba84cb5e043a887a541939a984daa&" },
+            { nome: "Five Seven",   precoNormal: 450000,  precoParceria: 350000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547305013360074803/fn-five-seven-330c92dd.webp?ex=6aa2ef96&is=6aa19e16&hm=faee51c8998e8aeaecea626665d27e2bb0e80afe384dd419d5bf7d6c3fb94056&" },
+            { nome: "MP5",          precoNormal: 600000,  precoParceria: 500000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306534722216087/hk-mp5-cca12975.webp?ex=6aa2f101&is=6aa19f81&hm=5afdc9d184b79f593fec0640adf124683d371b86efcde45b866268a9a663a772&" },
+            { nome: "AK MK2",       precoNormal: 750000,  precoParceria: 650000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306535091445841/ak47-18d0f9a0.webp?ex=6aa2f101&is=6aa19f81&hm=8136e368f236ceb67748d75852a0f511863d552aea4ba441e9e6ef4061e65c43&" },
+            { nome: "MTAR",         precoNormal: 780000,  precoParceria: 720000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306532339978281/mk18-assault-rifle-85686ef0.webp?ex=6aa2f100&is=6aa19f80&hm=9cf3d65bcf956ecf4056b0cac5ef19013a8935e8c48bf4358832b883c84d617b&" },
+            { nome: "Carabina MK2", precoNormal: 980000,  precoParceria: 900000,  imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533170184314/gta5-carbine-rifle-mk2-02495b91.webp?ex=6aa2f101&is=6aa19f81&hm=306a0ed4e4e9293569fc4cdbed7ca2e29160997ef3cdb19d57bd6132ef686fe1&" },
+            { nome: "G-36",         precoNormal: 1100000, precoParceria: 1000000, imagem: "https://cdn.discordapp.com/attachments/701058856725512193/1547306533564579840/g36c-ar-939a1241.webp?ex=6aa2f101&is=6aa19f81&hm=746089e8754c9943a136b6aa327aef680329fac9bc05fbac99bf4e27cab294aa&" }
         ];
 
+        /* ====== ESTADO ====== */
+        let carrinho = []; // { nome, quantidade, tipo, precoUnitario, subtotal }
+
+        /* ====== CONSTANTES ====== */
+        const HISTORICO_KEY = 'antares_historico';
+        const LIMITE_HISTORICO = 50;
+
+        /* ====== UTILITÁRIOS ====== */
         function formatarPreco(valor) {
             return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
 
-        function renderizarArmas() {
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function mostrarToast(mensagem, tipo = 'sucesso') {
+            const toast = document.getElementById('toast');
+            toast.textContent = mensagem;
+            toast.className = `toast ${tipo} mostrar`;
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('mostrar'), 3000);
+        }
+
+        async function copiarTexto(texto) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(texto);
+            }
+            return new Promise((resolve, reject) => {
+                try {
+                    const el = document.createElement('textarea');
+                    el.value = texto;
+                    el.style.position = 'fixed';
+                    el.style.opacity = '0';
+                    document.body.appendChild(el);
+                    el.focus();
+                    el.select();
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(el);
+                    ok ? resolve() : reject(new Error('Falha ao copiar'));
+                } catch (e) { reject(e); }
+            });
+        }
+
+        /* ====== RENDERIZAÇÃO DE ARMAS ====== */
+        function renderizarArmas(filtro = '') {
             const container = document.getElementById('armasContainer');
+            const termo = filtro.toLowerCase().trim();
+            const lista = termo
+                ? armas.filter(a => a.nome.toLowerCase().includes(termo))
+                : armas;
+
             container.innerHTML = '';
-            armas.forEach((arma, index) => {
-                const div = document.createElement('div');
-                div.className = 'card-arma';
-                div.innerHTML = `
+
+            if (lista.length === 0) {
+                container.innerHTML = '<div class="sem-resultados">Nenhuma arma encontrada.</div>';
+                return;
+            }
+
+            lista.forEach((arma) => {
+                const index = armas.indexOf(arma);
+                const card = document.createElement('div');
+                card.className = 'card-arma';
+                card.dataset.index = index;
+                card.style.animationDelay = `${index * 40}ms`;
+
+                card.innerHTML = `
                     <div class="arma-topo">
-                        <div class="arma-icone">
-                            <img src="${arma.imagem}" alt="${arma.nome}" />
+                        <div class="arma-icone carregando">
+                            <img src="${escapeHTML(arma.imagem)}" alt="${escapeHTML(arma.nome)}" loading="lazy">
                         </div>
                         <div>
-                            <div class="arma-nome">${arma.nome}</div>
+                            <div class="arma-nome">${escapeHTML(arma.nome)}</div>
                             <div class="arma-precos">
                                 <span class="preco-normal">Normal: ${formatarPreco(arma.precoNormal)}</span><br>
                                 <span class="preco-parceria">Parceria: ${formatarPreco(arma.precoParceria)}</span>
@@ -409,7 +863,7 @@
                     </div>
                     <div class="arma-controles">
                         <div class="controle-qtd">
-                            <input type="number" id="qtd_${index}" min="0" value="0" placeholder="Qtd">
+                            <input type="number" id="qtd_${index}" min="1" max="999" value="1" placeholder="Qtd">
                         </div>
                         <div class="controle-tipo">
                             <select id="tipo_${index}">
@@ -417,78 +871,278 @@
                                 <option value="parceria">Parceria</option>
                             </select>
                         </div>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(${index})" title="Adicionar item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
                     </div>
                 `;
-                container.appendChild(div);
+
+                container.appendChild(card);
+
+                const img = card.querySelector('img');
+                const wrap = card.querySelector('.arma-icone');
+                img.addEventListener('load', () => {
+                    img.classList.add('carregada');
+                    wrap.classList.remove('carregando');
+                });
+                img.addEventListener('error', () => {
+                    wrap.classList.remove('carregando');
+                    img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9V7h4v2"/></svg>';
+                    img.classList.add('carregada');
+                });
+
+                const input = card.querySelector('input[type="number"]');
+                input.addEventListener('input', () => {
+                    let v = parseInt(input.value) || 0;
+                    if (v < 1) v = 1;
+                    if (v > 999) v = 999;
+                    input.value = v;
+                });
+
+                // Enter no campo de quantidade = adicionar
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        adicionarAoCarrinho(index);
+                    }
+                });
             });
         }
 
-        function gerarECopiar() {
-            const nome = document.getElementById('nomeVendedor').value.trim();
-            const id = document.getElementById('idVendedor').value.trim();
+        /* ====== ADICIONAR AO CARRINHO ====== */
+        function adicionarAoCarrinho(index) {
+            const arma = armas[index];
+            const input = document.getElementById(`qtd_${index}`);
+            const select = document.getElementById(`tipo_${index}`);
 
-            if (!nome) {
-                alert('Por favor, preencha seu nome.');
+            const qtd = parseInt(input.value) || 0;
+            if (qtd < 1) {
+                mostrarToast('Quantidade mínima: 1', 'aviso');
+                input.focus();
                 return;
             }
-            if (!id) {
-                alert('Por favor, preencha seu ID.');
-                return;
-            }
 
-            let itens = [];
-            let totalGeral = 0;
+            const tipo = select.value;
+            const precoUnitario = tipo === 'normal' ? arma.precoNormal : arma.precoParceria;
+            const subtotal = precoUnitario * qtd;
 
-            armas.forEach((arma, index) => {
-                const qtd = parseInt(document.getElementById(`qtd_${index}`).value) || 0;
-                if (qtd > 0) {
-                    const tipo = document.getElementById(`tipo_${index}`).value;
-                    const preco = tipo === 'normal' ? arma.precoNormal : arma.precoParceria;
-                    const subtotal = preco * qtd;
-                    itens.push({
-                        nome: arma.nome,
-                        quantidade: qtd,
-                        tipo: tipo,
-                        subtotal: subtotal
-                    });
-                    totalGeral += subtotal;
-                }
+            carrinho.push({
+                nome: arma.nome,
+                quantidade: qtd,
+                tipo: tipo,
+                precoUnitario: precoUnitario,
+                subtotal: subtotal
             });
 
-            if (itens.length === 0) {
-                alert('Nenhum item selecionado. Ajuste as quantidades.');
+            // Resetar quantidade para 1
+            input.value = 1;
+
+            renderizarCarrinho();
+            atualizarResumo();
+
+            mostrarToast(`${arma.nome} (${tipo}) x${qtd} adicionado!`, 'sucesso');
+        }
+
+        /* ====== RENDERIZAR CARRINHO ====== */
+        function renderizarCarrinho() {
+            const carrinhoEl = document.getElementById('carrinho');
+            const listaEl = document.getElementById('carrinhoLista');
+            const contadorEl = document.getElementById('contadorCarrinho');
+
+            if (carrinho.length === 0) {
+                carrinhoEl.classList.remove('ativo');
+                listaEl.innerHTML = '';
+                contadorEl.textContent = '0';
+                return;
+            }
+
+            carrinhoEl.classList.add('ativo');
+            contadorEl.textContent = carrinho.length;
+            listaEl.innerHTML = '';
+
+            carrinho.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'item-carrinho';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-nome">${escapeHTML(item.nome)}</span>
+                        <span class="item-badge ${item.tipo}">${item.tipo}</span>
+                        <span class="item-qtd">× ${item.quantidade}</span>
+                    </div>
+                    <span class="item-subtotal">${formatarPreco(item.subtotal)}</span>
+                    <button class="btn-remover" onclick="removerDoCarrinho(${i})" title="Remover">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                `;
+                listaEl.appendChild(div);
+            });
+        }
+
+        /* ====== REMOVER DO CARRINHO ====== */
+        function removerDoCarrinho(index) {
+            const item = carrinho[index];
+            carrinho.splice(index, 1);
+            renderizarCarrinho();
+            atualizarResumo();
+            mostrarToast(`${item.nome} removido.`, 'aviso');
+        }
+
+        /* ====== RESUMO EM TEMPO REAL ====== */
+        function atualizarResumo() {
+            const resumo = document.getElementById('resumo');
+            let totalGeral = 0;
+            let totalItens = 0;
+
+            carrinho.forEach(item => {
+                totalGeral += item.subtotal;
+                totalItens += item.quantidade;
+            });
+
+            if (carrinho.length === 0) {
+                resumo.classList.remove('ativo');
+                resumo.innerHTML = '';
                 return;
             }
 
             const valorFac = totalGeral * 0.7;
             const valorVendedor = totalGeral * 0.3;
 
-            let texto = `📦 **VENDA REALIZADA** 📦\n`;
-            texto += `👤 Vendedor: ${nome} | 🆔 ID: ${id}\n`;
-            texto += `══════════════════════════\n`;
-            itens.forEach(item => {
-                texto += `🔫 ${item.nome} x${item.quantidade} (${item.tipo}) = 💰 ${formatarPreco(item.subtotal)}\n`;
-            });
-            texto += `══════════════════════════\n`;
-            texto += `💵 **Total: ${formatarPreco(totalGeral)}**\n`;
-            texto += `📊 Divisão 70/30:\n`;
-            texto += `🏛️ Facção (70%): ${formatarPreco(valorFac)}\n`;
-            texto += `👤 Vendedor (30%): ${formatarPreco(valorVendedor)}\n`;
-            texto += `✅ Venda finalizada!`;
-
-            navigator.clipboard.writeText(texto)
-                .then(() => {
-                    document.getElementById('feedback').textContent = '✅ Resumo copiado! Cole no Discord.';
-                    setTimeout(() => {
-                        document.getElementById('feedback').textContent = '';
-                    }, 3000);
-                })
-                .catch(err => {
-                    alert('Erro ao copiar: ' + err);
-                });
+            resumo.innerHTML = `
+                <div class="resumo-item">
+                    <span class="rotulo">Itens</span>
+                    <span class="valor">${totalItens}</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="rotulo">Total</span>
+                    <span class="valor total">${formatarPreco(totalGeral)}</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="rotulo">Facção (70%)</span>
+                    <span class="valor faccao">${formatarPreco(valorFac)}</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="rotulo">Vendedor (30%)</span>
+                    <span class="valor vendedor">${formatarPreco(valorVendedor)}</span>
+                </div>
+            `;
+            resumo.classList.add('ativo');
         }
 
-        renderizarArmas();
+        /* ====== AÇÃO PRINCIPAL ====== */
+        async function gerarECopiar() {
+            const nome = document.getElementById('nomeVendedor').value.trim();
+            const id = document.getElementById('idVendedor').value.trim();
+
+            if (!nome) {
+                mostrarToast('Preencha seu nome.', 'erro');
+                document.getElementById('nomeVendedor').focus();
+                return;
+            }
+            if (!id) {
+                mostrarToast('Preencha seu ID.', 'erro');
+                document.getElementById('idVendedor').focus();
+                return;
+            }
+            if (carrinho.length === 0) {
+                mostrarToast('Adicione pelo menos um item.', 'aviso');
+                return;
+            }
+
+            const totalGeral = carrinho.reduce((s, i) => s + i.subtotal, 0);
+            const valorFac = totalGeral * 0.7;
+            const valorVendedor = totalGeral * 0.3;
+
+            const texto = montarTextoDiscord(nome, id, carrinho, totalGeral, valorFac, valorVendedor);
+
+            try {
+                await copiarTexto(texto);
+                mostrarToast('Resumo copiado! Cole no Discord.', 'sucesso');
+                salvarNoHistorico({ nome, id, itens: [...carrinho], totalGeral, data: new Date().toISOString() });
+            } catch (err) {
+                console.error(err);
+                mostrarToast('Erro ao copiar.', 'erro');
+            }
+        }
+
+        function montarTextoDiscord(nome, id, itens, totalGeral, valorFac, valorVendedor) {
+            let texto = `📦 **VENDA REALIZADA** 📦\n`;
+            texto += `👤 Vendedor: \`${nome}\` | 🆔 ID: \`${id}\`\n`;
+            texto += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            itens.forEach(item => {
+                texto += `🔫 **${item.nome}** × ${item.quantidade} _(${item.tipo})_ → ${formatarPreco(item.subtotal)}\n`;
+            });
+            texto += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            texto += `💵 **Total: ${formatarPreco(totalGeral)}**\n`;
+            texto += `📊 **Divisão 70/30**\n`;
+            texto += `🏛️ Facção (70%): ${formatarPreco(valorFac)}\n`;
+            texto += `👤 Vendedor (30%): ${formatarPreco(valorVendedor)}\n`;
+            texto += `✅ _Venda finalizada!_`;
+            return texto;
+        }
+
+        /* ====== HISTÓRICO ====== */
+        function salvarNoHistorico(venda) {
+            try {
+                const historico = JSON.parse(localStorage.getItem(HISTORICO_KEY) || '[]');
+                historico.unshift(venda);
+                if (historico.length > LIMITE_HISTORICO) historico.length = LIMITE_HISTORICO;
+                localStorage.setItem(HISTORICO_KEY, JSON.stringify(historico));
+            } catch (e) {
+                console.warn('Não foi possível salvar no histórico:', e);
+            }
+        }
+
+        /* ====== LIMPAR ====== */
+        function limparTudo() {
+            carrinho = [];
+            document.getElementById('busca').value = '';
+            renderizarArmas();
+            renderizarCarrinho();
+            atualizarResumo();
+            mostrarToast('Tudo limpo.', 'aviso');
+        }
+
+        /* ====== BUSCA ====== */
+        function filtrarArmas() {
+            const termo = document.getElementById('busca').value;
+            renderizarArmas(termo);
+        }
+
+        /* ====== ATALHOS ====== */
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                gerarECopiar();
+            }
+            if (e.key === 'Escape') {
+                const busca = document.getElementById('busca');
+                if (document.activeElement === busca) {
+                    busca.value = '';
+                    filtrarArmas();
+                }
+            }
+        });
+
+        /* ====== INICIALIZAÇÃO ====== */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarArmas();
+            renderizarCarrinho();
+            atualizarResumo();
+
+            const busca = document.getElementById('busca');
+            let timer;
+            busca.addEventListener('input', () => {
+                clearTimeout(timer);
+                timer = setTimeout(filtrarArmas, 150);
+            });
+        });
     </script>
 </body>
-</html>
+    </html>
